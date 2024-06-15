@@ -6,7 +6,7 @@ help:
 	@echo "$$ make exec-docker"
 	
 	@echo イメージのビルドとコンテナの実行
-	@echo "$$ make all-docker"
+	@echo "$$ make all-setup-docker"
 	
 	@echo Docker Terminal 起動
 	@echo "$$ make terminal-docker"
@@ -22,31 +22,24 @@ help:
 
 
 build-docker:
-	sudo docker build -t shoppint_memo .
+	sudo docker build -t shopping_memo .
 
 exec-docker:
-	docker run --name shoppint_memo -p 8080:80 -d shoppint_memo
-# docker --name shoppint_memo run -p 3000:3000 shoppint_memo
-
-
-all-docker: build-docker exec-docker
-
-# docker-setup:
-# 	sudo chmod -R 777 create_object
-# 	sudo chown -R www-data:www-data create_object 
-# 	sudo docker build -t create_object .
-# 	docker run -d --name create_object -p 8000:80 -v ~/create_object/create_object:/var/www/html create_object
+	docker run --name shopping_memo -p 8080:8080 -d shopping_memo
+# docker run -d --name shopping_memo -p 8080:80 -v ~/shopping_memo:/app shopping_memo
 	
-# 新しいファイルを作成した場合に使用する
-# permission:	
-# 	sudo chmod -R 777 create_object
-# 	sudo chown -R www-data:www-data create_object 
+all-setup-docker: build-docker exec-docker
+
+rm-package:
+	docker system prune -a
+
+re-all-setup-docker: stop-docker rm-package all-setup-docker
 
 terminal-docker:
-	docker exec -i -t shoppint_memo bash
+	docker exec -i -t shopping_memo bash
 
-# docker-start:
-# 	docker start create_object
+start-docker:
+	docker start shopping_memo
 
-# docker-stop:
-# 	docker stop create_object
+stop-docker:
+	docker stop shopping_memo

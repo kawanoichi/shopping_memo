@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # ポートを公開
-EXPOSE 3000
+EXPOSE 8080
 
 # アプリケーションを起動
 CMD ["node", "app.js"]
